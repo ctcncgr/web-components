@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>LIS Web-Components - &lt;lis-mine-web-properties-element&gt;</title>
+    <!-- CSS framework -->
+    <link rel="stylesheet" type="text/css" href="../node_modules/uikit/dist/css/uikit.min.css">
+    <script src="../node_modules/uikit/dist/js/uikit.min.js"></script>
+    <!-- web components polyfills -->
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <!-- GraphQL -->
+    <script type="text/javascript" src="./graphql.js"></script>
+    <!-- web components -->
+    <script type="module" src="../dist/index.js"></script>
+  </head>
+
+  <body>
+
+    <div class="uk-container">
+      <h1>&lt;lis-mine-web-properties-element&gt;</h1>
+      <p>
+        The <code>&lt;lis-mine-web-properties-element&gt;</code> provides the web properties of the mines being queried by the GraphQL server.
+      </p>
+      <hr/>
+
+      <!-- the element -->
+      <lis-mine-web-properties-element id="mine-web-properties"></lis-mine-web-properties-element>
+
+    </div>
+
+    <!-- set the search function by property because functions can't be set as attributes -->
+    <script type="text/javascript">
+
+      // mine web properties query for the LIS GraphQL API
+      const propertiesQuery = `
+      query Query {
+        mineWebPropertiesMulti {
+          title
+          subTitle
+          releaseVersion
+          sitePrefix
+        }
+      }
+      `;
+      
+      // the search function given to the LIS mine web properties Web Component
+      //
+      // FIX: we don't need searchData or page for this function.
+      //
+      function getMineWebPropertiesMulti(searchData, page, {abortSignal}) {
+          const description = 'foobar';
+          const pageSize = 10;
+          const start = (page-1)*pageSize;
+          // pageSize+1 because we want to see if there's a "next" page
+          const variables = {description: description, start: start, size: pageSize+1};
+          // returns a Promise that resolves to an array of MineWebProperties objects the 
+          // Web Component knows how to parse
+          return graphqlQuery(uri, propertiesQuery, variables, abortSignal)
+              .then(({data}) => {
+                  // compute if there's a next page
+                  const hasNext = pageSize+1 === data.mineWebPropertiesMulti.length;
+                  // remove the lookahead result
+                  if (hasNext) data.mineWebPropertiesMulti.pop();
+                  // construct the expected paginated results object
+                  const paginatedResults = {
+                      hasNext,
+                      results: data.mineWebPropertiesMulti,
+                  };
+                  return paginatedResults;
+              });
+      }
+
+      const mineWebPropertiesElement = document.getElementById('mine-web-properties');
+      mineWebPropertiesElement.searchFunction = getMineWebPropertiesMulti;
+
+    </script>
+
+  </body>
+
+</html>
