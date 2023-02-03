@@ -13,3 +13,4 @@ export * from './lis-trait-search-element';
 export * from './lis-qtl-search-element';
 export * from './lis-publication-search-element';
 export * from './lis-mine-web-properties-element';
+export * from './lis-gwas-search-element';
