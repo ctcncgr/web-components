@@ -42,8 +42,8 @@
 
       // gene description search query for the LIS GraphQL API
       const geneQuery = `
-      query Query($description: String!, $start: Int, $size: Int) {
-        genes(description: $description, start: $start, size: $size) {
+      query Query($name: String, $description: String, $size: Int, $start: Int) {
+        genes(name: $name, description: $description, start: $start, size: $size) {
           name
           description
         }
@@ -53,10 +53,11 @@
       // the search function given to the LIS gene search Web Component
       function getGenes(searchData, page, {abortSignal}) {
           const description = searchData['query'];
+          const name = searchData['query'];
           const pageSize = 10;
           const start = (page-1)*pageSize;
           // pageSize+1 because we want to see if there's a "next" page
-          const variables = {description: description, start: start, size: pageSize+1};
+          const variables = {name: name,description: description, start: start, size: pageSize+1};
           // returns a Promise that resolves to an array of Gene objects the gene search
           // Web Component knows how to parse: {name: string, description: string}[]
           return graphqlQuery(uri, geneQuery, variables, abortSignal)
