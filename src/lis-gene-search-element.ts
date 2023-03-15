@@ -11,6 +11,7 @@ import {LisPaginatedSearchMixin, PaginatedSearchOptions} from './mixins';
  */
 export type GeneSearchData = {
     query: string;
+    query2: string;
 };
 
 
@@ -29,8 +30,11 @@ export type GeneSearchResult = {
  * {@link LisGeneSearchElement | `LisGeneSearchElement`} class requires for
  * performing a gene search.
  *
- * @param query The search term in the input element when the search form was
+ * @param query The search term description in the input element when the search form was
  * submitted.
+ * 
+ * @param query2 The search term name in the input element when the search form was submitted.
+ * 
  * @param page What page of results the search is for. Will always be 1 when a
  * new search is performed.
  * @param options Optional parameters that aren't required to perform a gene
@@ -41,7 +45,7 @@ export type GeneSearchResult = {
  * objects.
  */
 export type GeneSearchFunction =
-    (query: string, page: number, options: PaginatedSearchOptions) => Promise<Array<GeneSearchResult>>;
+    (query: string, query2: string, page: number, options: PaginatedSearchOptions) => Promise<Array<GeneSearchResult>>;
 
 
 /**
@@ -122,6 +126,7 @@ LisPaginatedSearchMixin(LitElement)<GeneSearchData, GeneSearchResult>() {
         super();
         // configure query string parameters
         this.requiredQueryStringParams = ['query'];
+        this.requiredQueryStringParams = ['query2'];
         // configure results table
         this.resultAttributes = [
             'name',
@@ -145,9 +150,18 @@ LisPaginatedSearchMixin(LitElement)<GeneSearchData, GeneSearchResult>() {
 name="query"
 class="uk-input"
 type="text"
-placeholder="Input"
+placeholder="Search by gene 'description'."
 aria-label="Input"
 .value=${this.queryStringController.getParameter('query')}>
+</div>
+<div class="uk-margin">
+<input
+name="query"
+class="uk-input"
+type="text"
+placeholder="Search by gene 'name'."
+aria-label="Input"
+.value=${this.queryStringController.getParameter('query2')}>
 </div>
 <div class="uk-margin">
 <button type="submit" class="uk-button uk-button-primary">Search</button>
