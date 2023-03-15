@@ -42,12 +42,16 @@
 
       // gene description search query for the LIS GraphQL API
       const geneQuery = `
-      query Query($name: String, $description: String, $size: Int, $start: Int) {
-        genes(name: $name, description: $description, start: $start, size: $size) {
-          name
-          description
+        query Query($name: String, $description: String, $size: Int, $start: Int) {
+          descriptionSearch: genes(description: $description, start: $start, size: $size) {
+            name
+            description
+          }
+          nameSearch: genes(name: $name, start: $start, size: $size) {
+            name
+            description
+          }
         }
-      }
       `;
       
       // the search function given to the LIS gene search Web Component
