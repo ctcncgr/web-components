@@ -11,7 +11,7 @@ import {LisPaginatedSearchMixin, PaginatedSearchOptions} from './mixins';
  */
 export type GeneSearchData = {
     query: string;
-    name: string;
+    query2: string;
 };
 
 
