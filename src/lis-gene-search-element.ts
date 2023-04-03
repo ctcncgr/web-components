@@ -11,7 +11,7 @@ import {LisPaginatedSearchMixin, PaginatedSearchOptions} from './mixins';
  */
 export type GeneSearchData = {
     query: string;
-    query2: string;
+    query2: string; // adding this line for the gene name input field
 };
 
 
@@ -126,7 +126,6 @@ LisPaginatedSearchMixin(LitElement)<GeneSearchData, GeneSearchResult>() {
         super();
         // configure query string parameters
         this.requiredQueryStringParams = ['query'];
-        this.requiredQueryStringParams = ['query2'];
         // configure results table
         this.resultAttributes = [
             'name',
@@ -153,15 +152,6 @@ type="text"
 placeholder="Search by gene 'description'."
 aria-label="Input"
 .value=${this.queryStringController.getParameter('query')}>
-</div>
-<div class="uk-margin">
-<input
-name="query"
-class="uk-input"
-type="text"
-placeholder="Search by gene 'name'."
-aria-label="Input"
-.value=${this.queryStringController.getParameter('query2')}>
 </div>
 <div class="uk-margin">
 <button type="submit" class="uk-button uk-button-primary">Search</button>
