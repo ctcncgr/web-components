@@ -11,7 +11,6 @@ import {LisPaginatedSearchMixin, PaginatedSearchOptions} from './mixins';
  */
 export type GeneSearchData = {
     query: string;
-    query2: string; // adding this line for the gene name input field
 };
 
 
@@ -33,8 +32,6 @@ export type GeneSearchResult = {
  * @param query The search term description in the input element when the search form was
  * submitted.
  * 
- * @param query2 The search term name in the input element when the search form was submitted.
- * 
  * @param page What page of results the search is for. Will always be 1 when a
  * new search is performed.
  * @param options Optional parameters that aren't required to perform a gene
@@ -45,7 +42,7 @@ export type GeneSearchResult = {
  * objects.
  */
 export type GeneSearchFunction =
-    (query: string, query2: string, page: number, options: PaginatedSearchOptions) => Promise<Array<GeneSearchResult>>;
+    (query: string, page: number, options: PaginatedSearchOptions) => Promise<Array<GeneSearchResult>>;
 
 
 /**
