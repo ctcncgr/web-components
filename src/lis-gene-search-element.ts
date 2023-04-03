@@ -123,7 +123,7 @@ LisPaginatedSearchMixin(LitElement)<GeneSearchData, GeneSearchResult>() {
     constructor() {
         super();
         // configure query string parameters
-        this.requiredQueryStringParams = ['query'];
+        this.requiredQueryStringParams = ['query'] || ['query2'];
         // configure results table
         this.resultAttributes = [
             'name',
