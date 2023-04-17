@@ -150,7 +150,7 @@ LisPaginatedSearchMixin(LitElement)<GeneSearchData, GeneSearchResult>() {
 name="query"
 class="uk-input"
 type="text"
-placeholder="Search by gene 'description or name'."
+placeholder="Search by gene 'description'"
 aria-label="Input"
 .value=${this.queryStringController.getParameter('query')}>
 </div>
@@ -159,7 +159,7 @@ aria-label="Input"
 name="query"
 class="uk-input"
 type="text"
-placeholder="Search by gene 'description or name'."
+placeholder="Search by gene 'name'"
 aria-label="Input"
 .value=${this.queryStringController.getParameter('query2')}>
 </div>
