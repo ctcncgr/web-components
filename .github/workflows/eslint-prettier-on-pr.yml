@@ -17,5 +17,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npx eslint-config-prettier src/*.ts src/**/*.ts
+      - run: npx prettier --write src/*.ts src/**/*.ts
       - run: npx prettier --check src/*.ts src/**/*.ts
       - run: npx eslint src/*.ts src/**/*.ts
